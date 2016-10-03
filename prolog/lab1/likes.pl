@@ -1,0 +1,10 @@
+likes(tim,chips). 
+likes(tim,fish). 
+likes(tim,spinach). 
+likes(tim,apples). 
+likes(carla,oranges). 
+likes(carla,chicken). 
+likes(carla,chocolate). 
+likes(carla,ice_cream). 
+likes(tim,crepes).
+likes(carla,crepes).

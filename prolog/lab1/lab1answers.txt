@@ -1,0 +1,16 @@
+#What query would you use to find out if Carla likes soup or not? Type in the query and verify that Carla does not like soup. 
+
+likes(carla,soup).
+
+#What query would you use to find out if anybody likes crepes? Type in the query and verify that Tim likes crepes. 
+
+likes(X,crepes).
+
+#What query would you use to find out if Carla likes crepes or not? Type in the query and verify that Carla does like crepes. 
+
+likes(carla,crepes).
+
+#Using a single query how would you verify that both Tim and Carla like crepes? 
+Verify that this works. 
+
+likes(tim,crepes),likes(carla,crepes).
