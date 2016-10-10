@@ -8,10 +8,10 @@ This rules sets that a person should be called a student if they are studying ou
 
 Fact: Facts describe what is true about the "world" we are trying to describe.
 e.g. studying(george,isr).
-George is studying isr
+George is studying isr.
 
 Predicate: Predicates are used mainly by rules for logical calculations between variables.
-e.g. 
+e.g. In the above fact, studying is a predicate.
 
 Argument: Arguments are the parameters passed to functors (described below)
 e.g. family(X,Y,Z)
@@ -19,7 +19,7 @@ X,Y and Z are the arguments of the family functor.
 
 Functor: Functors are used to create new facts or rules without using only the built-in predicates.
 e.g. family(X,Y,Z)
-family is the name of the functor, that creates a realationship between the three arguments.
+family() is the functor, that creates a relationship between the three arguments.
 
 Arity: Arity is the number of arguments of a functor.
 e.g. family(X,Y,Z)
