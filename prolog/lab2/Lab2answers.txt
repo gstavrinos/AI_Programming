@@ -86,7 +86,7 @@ At this point I have to add that the aunt/uncle relations could have been much s
 
 5. Different Prolog implementations behave differently when you try to execute a query for which there are no clauses in the knowledge base, for example by typing: ?- uncle(X,Y). where there is no clauses for uncle. Should a query fail or should it raise an error condition? Determine how SW-Prolog behaves and explain why you think this is (or is not) the right choice. 
 
-In SWI-Prolog ?- uncle(X,Y) returns false. I think that this is the correct behaviour, or at least the behaviour I would expect, because in that way, the system informs us that there is not even one relationship of unle in the system.
+In SWI-Prolog ?- uncle(X,Y) returns false. I think that this is the correct behaviour, or at least the behaviour I would expect, because in that way, the system informs us that there is not even one relationship of uncle in the system.
 
 6. Define the relations stepfather and stepmother in terms of the relations father, mother, and married. 
 
