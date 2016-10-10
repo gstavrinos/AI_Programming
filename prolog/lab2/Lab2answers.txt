@@ -1,0 +1,126 @@
+
+
+1. Define and give and example of each: rule, fact, predicate, argument, functor, arity. 
+
+Rule: Using a rule, we can set a condition as true, based on other known/predefined conditions.
+e.g. student(X) :- studying(X,isr).
+This rules sets that a person should be called a student if they are studying our module!
+
+Fact: Facts describe what is true about the "world" we are trying to describe.
+e.g. studying(george,isr).
+George is studying isr
+
+Predicate: Predicates are used mainly by rules for logical calculations between variables.
+e.g. 
+
+Argument: Arguments are the parameters passed to functors (described below)
+e.g. family(X,Y,Z)
+X,Y and Z are the arguments of the family functor.
+
+Functor: Functors are used to create new facts or rules without using only the built-in predicates.
+e.g. family(X,Y,Z)
+family is the name of the functor, that creates a realationship between the three arguments.
+
+Arity: Arity is the number of arguments of a functor.
+e.g. family(X,Y,Z)
+The arity of this functor is 3.
+
+2. Modify geo.pl to include your hometown together with its state (or region) and country. 
+
+/* geo.pl */
+/* Sample geographical knowledge base */
+/* Clause 1 */ in(atlanta,georgia).
+/* Clause 2 */ in(houston,texas).
+/* Clause 3 */ in(austin,texas).
+/* Clause 4 */ in(toronto,ontario).
+/* My Clause */in(peiraias,athens).
+/* Clause 5 */ in(X,usa) :- in(X,georgia).
+/* Clause 6 */ in(X,usa) :- in(X,texas).
+/* Clause 7 */ in(X,canada) :- in(X,ontario).
+/* Clause 8 */ in(X,north_america) :- in(X,usa).
+/* Clause 9 */ in(X,north_america) :- in(X,canada).
+/* My Clause */in(X,greece) :- in(X,athens).
+
+3. What answer does geo.pl give to the following query? Why? ?-in(texas,usa). 
+
+The answer I get is false, because we don't have a rule specifying that texas is in USA. The only related rule specifies that cities in Texas are in the USA, but not Texas itself.
+
+4. Modify family.pl to include the predicates aunt, uncle, and cousin. 
+
+After the latest additions, my family.pl includes the following lines:
+
+father(david,carla).       
+father(david,tim). 
+father(jose_david,david).  
+father(jose_david,eullen).
+father(jose,jose_david).
+father(roland,catherine).  
+father(roland,michael).
+father(simon,roland).
+mother(catherine,carla).   
+mother(catherine,tim).
+mother(denise,catherine).  
+mother(denise,michael).
+mother(cecile,roland).
+mother(guillermina,david). 
+mother(guillermina,eullen).
+mother(digna,guillermina).
+parent(X,Y) :- father(X,Y).
+parent(X,Y) :- mother(X,Y).
+/* I am not using more rules and facts than the ones specified */
+/* Gender and siblings would make this MUCH easier! */
+aunt(X,Y) :- father(Z,Y),father(K,Z),father(K,X),mother(X,_),not(mother(X,Y)).
+aunt(X,Y) :- mother(Z,Y),father(K,Z),father(K,X),mother(X,_),not(mother(X,Y)).
+aunt(X,Y) :- mother(Z,Y),mother(K,Z),mother(K,X),mother(X,_),not(mother(X,Y)).
+aunt(X,Y) :- father(Z,Y),mother(K,Z),mother(K,X),mother(X,_),not(mother(X,Y)).
+uncle(X,Y) :- father(Z,Y),father(K,Z),father(K,X),father(X,_),not(father(X,Y)).
+uncle(X,Y) :- mother(Z,Y),father(K,Z),father(K,X),father(X,_),not(father(X,Y)).
+uncle(X,Y) :- mother(Z,Y),mother(K,Z),mother(K,X),father(X,_),not(father(X,Y)).
+uncle(X,Y) :- father(Z,Y),mother(K,Z),mother(K,X),father(X,_),not(father(X,Y)).
+cousin(X,Y) :- aunt(Z,Y),mother(Z,X).
+cousin(X,Y) :- uncle(Z,Y),father(Z,X).
+
+
+
+At this point I have to add that the aunt/uncle relations could have been much simpler using siblings and genders, because now the only way to determine the gender of a person is for them to be a parent, which does not include some of the relations. I did it this way, because the exercise did not specifically asked us to add siblings and genders. Finally the last "not" condition makes sure that X cannot simultaneously be an aunt/uncle and a mother/father for X.
+
+5. Different Prolog implementations behave differently when you try to execute a query for which there are no clauses in the knowledge base, for example by typing: ?- uncle(X,Y). where there is no clauses for uncle. Should a query fail or should it raise an error condition? Determine how SW-Prolog behaves and explain why you think this is (or is not) the right choice. 
+
+In SWI-Prolog ?- uncle(X,Y) returns false. I think that this is the correct behaviour, or at least the behaviour I would expect, because in that way, the system informs us that there is not even one relationship of unle in the system.
+
+6. Define the relations stepfather and stepmother in terms of the relations father, mother, and married. 
+
+After the latest additions, my family.pl includes the following lines:
+
+father(david,carla).       
+father(david,tim). 
+father(jose_david,david).  
+father(jose_david,eullen).
+father(jose,jose_david).
+father(roland,catherine).  
+father(roland,michael).
+father(simon,roland).
+mother(catherine,carla).   
+mother(catherine,tim).
+mother(denise,catherine).  
+mother(denise,michael).
+mother(cecile,roland).
+mother(guillermina,david). 
+mother(guillermina,eullen).
+mother(digna,guillermina).
+parent(X,Y) :- father(X,Y).
+parent(X,Y) :- mother(X,Y).
+/* I am not using more rules and facts than the ones specified */
+/* Gender and siblings would make this MUCH easier! */
+aunt(X,Y) :- father(Z,Y),father(K,Z),father(K,X),mother(X,_),not(mother(X,Y)).
+aunt(X,Y) :- mother(Z,Y),father(K,Z),father(K,X),mother(X,_),not(mother(X,Y)).
+aunt(X,Y) :- mother(Z,Y),mother(K,Z),mother(K,X),mother(X,_),not(mother(X,Y)).
+aunt(X,Y) :- father(Z,Y),mother(K,Z),mother(K,X),mother(X,_),not(mother(X,Y)).
+uncle(X,Y) :- father(Z,Y),father(K,Z),father(K,X),father(X,_),not(father(X,Y)).
+uncle(X,Y) :- mother(Z,Y),father(K,Z),father(K,X),father(X,_),not(father(X,Y)).
+uncle(X,Y) :- mother(Z,Y),mother(K,Z),mother(K,X),father(X,_),not(father(X,Y)).
+uncle(X,Y) :- father(Z,Y),mother(K,Z),mother(K,X),father(X,_),not(father(X,Y)).
+cousin(X,Y) :- aunt(Z,Y),mother(Z,X).
+cousin(X,Y) :- uncle(Z,Y),father(Z,X).
+stepfather(X,Y) :- married(X,Z),not(mother(Z,Y)).
+stepmother(X,Y) :- married(X,Z),not(father(Z,Y)).
