@@ -1,0 +1,61 @@
+1. Modify the clauses for capital_of so that names of cities will begin with capital letters. (This is simply a matter of writing them differently; you need not add any clauses to perform computations. 
+
+/* geo.pl */
+/* Sample geographical knowledge base */
+/* Clause 1 */ in('Atlanta','Georgia').
+/* Clause 2 */ in('Houston','Texas').
+/* Clause 3 */ in('Austin','Texas').
+/* Clause 4 */ in('Toronto','Ontario').
+/* My Clause */in('Peiraias','Athens').
+/* Clause 5 */ in(X,'USA') :- in(X,'Georgia').
+/* Clause 6 */ in(X,'USA') :- in(X,'Texas').
+/* Clause 7 */ in(X,'Canada') :- in(X,'Ontario').
+/* Clause 8 */ in(X,'North_America') :- in(X,'USA').
+/* Clause 9 */ in(X,'North_America') :- in(X,'Canada').
+/* My Clause */in(X,'Greece') :- in(X,'Athens').
+
+
+
+2. Construct a query that will cause family.pl (lecture 2) to display the names of all the mothers in the knowledge base. 
+
+mother(Mother,_),write(Mother),write(' is a mother!'),nl,fail.
+
+
+
+3. In interactive programs, we often want to perform a query that will ask the user for the answer to a yes-no question, then succeed if the user types “yes” or fail if (s)he types “no”. The query read(yes) does this. In what ways is it unsatisfactory? Write a procedure called check_for_yes that does the same thing in a more adequate way. 
+
+The problem with read(yes) is that if the user types anything except yes, the result will be false, which is not always what we need. The procedure below eliminates the possibility of unwanted input and accepts only yes and no an answer.
+
+/*interactive.pl*/
+check_for_yes :- read(R),nl,(((R == yes) -> true);((R == no) -> false);write("Wrong answer. Please try again with yes/no.\n"),check_for_yes).
+
+
+4. What is meant by saying that write “cannot be satisfied”? 
+
+I don't really know what that means.. :\
+
+
+
+5. Write a procedure learn_capitals that accepts from the user an unlimited number of names of states and their capitals (ending with stop) and stores them in a knowledge base. A dialog with your procedure should look like this: 
+    ?-learn_capitals. 
+    State? georgia. 
+    Capital? atlanta. 
+    State? idaho. 
+    Capital? boise. 
+    State? stop. 
+    ?- 
+Use a recursive loop to perform the repetition. 
+
+/*learn_capitals.pl*/
+learn_capitals :- write("State? "),
+					read(R1),(
+							(R1 \= stop) -> (
+								write("Capital? "),
+								read(R2),
+								(R2 \= stop) -> assertz(capital(R2,R1)),learn_capitals
+							)
+						).
+
+						
+
+6. Write another procedure type_capitals which, when executed after learn_capitals, will print out the state and capitals in the order in which they were given, and at the same time will remove them from the knowledge base. This time perform the repetition with backtracking, not recursion. 
