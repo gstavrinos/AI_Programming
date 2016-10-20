@@ -32,7 +32,7 @@ check_for_yes :- read(R),nl,(((R == yes) -> true);((R == no) -> false);write("Wr
 
 4. What is meant by saying that write “cannot be satisfied”? 
 
-I don't really know what that means.. :\
+I don't really know what that means... Please someone help me on this one.
 
 
 
@@ -56,6 +56,21 @@ learn_capitals :- write("State? "),
 							)
 						).
 
+Another way to accomplish the above procedure is to create multiple learn_capitals. (keep in mind that save_capital could have also be names as learn_capitals) e.g.
+
+
+/*learn_capitals2.pl*/
+save_capital(State, Capital) :- assertz(capital(Capital, State)).
+learn_capitals(stop) :- true.
+learn_capitals(State) :- write('Capital? '),read(Capital),save_capital(State,Capital),learn_capitals.
+learn_capitals :- write('State? '),read(State),learn_capitals(State).
+
+
+The problem with the method above is that if we type stop. as a capital name, the problem will resume normally.
+
 						
 
 6. Write another procedure type_capitals which, when executed after learn_capitals, will print out the state and capitals in the order in which they were given, and at the same time will remove them from the knowledge base. This time perform the repetition with backtracking, not recursion. 
+
+
+type_capitals :- capital(C,S),write("State: "),write(S),write(", Capital: "),write(C),retract(capital(C,S)),nl,fail.
