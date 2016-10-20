@@ -66,7 +66,7 @@ learn_capitals(State) :- write('Capital? '),read(Capital),save_capital(State,Cap
 learn_capitals :- write('State? '),read(State),learn_capitals(State).
 
 
-The problem with the method above is that if we type stop. as a capital name, the problem will resume normally.
+The problem with the method above is that if we type stop. as a capital name, the procedure will resume normally.
 
 						
 
