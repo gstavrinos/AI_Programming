@@ -1,0 +1,22 @@
+1. Define a predicate my_close_enough which tests whether two numbers are equal to within 0.1% of the larger number. Note that if both numbers are integers and you divide one by the other, some implementations will use integer division, and you will only get the answer to the nearest integer. In such cases, either avoid using division or multiply one of the numbers by 1.0 in other to make it floating-point. The goal my_close_enough(1000,1001) should succeed; my_close_enough(1000,950) should fail. 
+
+/*my_close_enough.pl*/
+my_close_enough(X,Y) :- (X > Y) -> (Xf is X * 1.0,Div is Y / Xf,Diff is 1 - Div,Diff =< 0.1);((Y > X) -> (Yf is Y * 1.0,Div is X / Yf,Diff is 1 - Div,Diff =< 0.1));true.
+
+2. Write a predicate my_square_root(X,Y) that unifies Y with the square root of X. Find the square root by successive approximations, based on the principle that if G is a reasonable good guess for the square root of N, then (N/G + G)/2 is a better guess. Start with G = 1, and stop when G no longer changes very much from one iteration to the next. 
+
+
+
+3. Write a procedure called display_degrees that takes as its argument a list containing name, college degrees, job title, and employer and displays just the college degrees. Note that the number of degrees is unpredictable. How would represent a person with no college degree? 
+
+
+
+4. What does member do if the desired element occurs more than once in the list? 
+
+
+
+5. What does member do if the 1st argument is uninstantiated? 
+
+
+
+6. Show how the query ?-append(X,Y,[a,b,c]). generates multiple solutions.
