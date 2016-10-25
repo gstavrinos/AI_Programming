@@ -5,7 +5,18 @@ my_close_enough(X,Y) :- (X > Y) -> (Xf is X * 1.0,Div is Y / Xf,Diff is 1 - Div,
 
 2. Write a predicate my_square_root(X,Y) that unifies Y with the square root of X. Find the square root by successive approximations, based on the principle that if G is a reasonable good guess for the square root of N, then (N/G + G)/2 is a better guess. Start with G = 1, and stop when G no longer changes very much from one iteration to the next. 
 
+/*my_square_root.pl*/
+close_enough(X,X).
+close_enough(X,Y) :- X<Y,Diff is Y - X,Diff<0.0001.
+close_enough(X,Y) :- Y<X,close_enough(Y,X). 
 
+approx(N,G,T) :- T is ((N / G) + G) / 2.
+
+my_square_root(X,Y,G) :- approx(X,G,Z),not(close_enough(Z,G)) -> my_square_root(X,Y,Z);Y is G.
+
+my_square_root(X,nonexistent) :- X<0.0.
+
+my_square_root(X,Y) :- G is 1,my_square_root(X,Y,G).
 
 3. Write a procedure called display_degrees that takes as its argument a list containing name, college degrees, job title, and employer and displays just the college degrees. Note that the number of degrees is unpredictable. How would represent a person with no college degree? 
 
