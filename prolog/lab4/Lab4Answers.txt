@@ -20,14 +20,46 @@ my_square_root(X,Y) :- G is 1,my_square_root(X,Y,G).
 
 3. Write a procedure called display_degrees that takes as its argument a list containing name, college degrees, job title, and employer and displays just the college degrees. Note that the number of degrees is unpredictable. How would represent a person with no college degree? 
 
+/*display_degrees.pl*/
+
+
+list_length([],0).
+list_length([_|Tail],K) :- list_length(Tail,J),K is J + 1.
+
+final_print([X|_]) :- write(X),nl.
+
+isolate_degrees([],0) :- true.
+isolate_degrees([X|Rest],Length) :- final_print(X),L is Length - 1,isolate_degrees(Rest,L).
+isolate_degrees([X|_]) :- list_length(X,K),isolate_degrees(X,K).
+
+display_degrees([Name|Rest]) :- list_length(Rest,K),K>=3 -> write(Name),write(' has the following degrees: '),nl,isolate_degrees(Rest);write(Name),write(' has no college degree.').
 
 
 4. What does member do if the desired element occurs more than once in the list? 
 
-
+Member iterates through the whole list even if the desired element was found, thus it prints true multiple times (as many times the element was found in the list)
 
 5. What does member do if the 1st argument is uninstantiated? 
 
-
+It assigns all the values of the list to the first argument!
+e.g.
+?- member(X,[3,2,3,4,1]).
+X = 3 ;
+X = 2 ;
+X = 3 ;
+X = 4 ;
+X = 1.
 
 6. Show how the query ?-append(X,Y,[a,b,c]). generates multiple solutions.
+
+The output of the command above is:
+
+?- append(X,Y,[a,b,c]).
+X = [],
+Y = [a, b, c] ;
+X = [a],
+Y = [b, c] ;
+X = [a, b],
+Y = [c] ;
+X = [a, b, c],
+Y = [] ;
