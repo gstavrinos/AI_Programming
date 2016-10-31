@@ -1,6 +1,12 @@
 1. Compute by hand the following Prolog query: 
 ?-member(c,[a,b,c,X]). 
 
+First Call:  member(c,[a,b,c,_NOVAR_CODE])
+Second Call: member(c,[b,c,_NOVAR_CODE])
+Third Call:  member(c,[c,_NOVAR_CODE])
+
+true;
+X = c 
 
 
 2. Write a predicate absval(X,Y) that unifies Y with the absolute value of X, without using any built-in absolute value function that your implementation might supply. 
@@ -12,6 +18,7 @@ yes
 /*absval.pl*/
 absval(X,Y) :- X<0,Y is -X,!.
 absval(X,Y) :- X>=0,Y is X,!.
+
 
 3. Consider a predicate my_cut defined as follows:  
 my_cut :- ! 
@@ -25,15 +32,33 @@ What is printed by each of the following queries?
 ?-cuttest1(X), write(X), fail. 
 Explain why this happens. 
 
+?-cuttest0(X), write(X), fail.
+Prints 1 and then False.
+
+
+?-cuttest1(X), write(X), fail. 
+Print 12 and the False.
+
+The second test prints both 1 and 2, because my_cut runs after all fact predicates have been tested, even though my_cut includes a !. In order to avoid this behaviour we need to replace my_cut with a !, resulting in the first test. my_cut just shows a bad practice of using !.
 
 
 4. Write a predicate rem_dups that removes duplicated members from list X giving list Y, thus: 
-?-rem_dups([a,b,r,a,c,a,d,a,b,r,a],X). 
+?-rem_dups([a,b,r,a,c,a,d,a,b,r,a],X).
 X=[a,b,r,c,d] 
 That is, only the 1st occurrence of each element is to be preserved. Check that your procedure does not generate spurious alternatives. 
 
+/*rem_dups.pl*/
+
+rem_dups([First|Tail],X,L) :- not(member(First,L)),!,append(L,[First],K),rem_dups(Tail,X,K).
+rem_dups([First|Tail],X,L) :- member(First,L),!,rem_dups(Tail,X,L).
+rem_dups([],X,L) :- X=L.
+
+rem_dups([First|Tail],X) :- var(X),!,L=[First],rem_dups(Tail,X,L).
 
 
 5. Write a predicate that concatenates the elements of two lists into a single list, thus: 
 ?- concatenate([a,b,c],[d,e,f,g,h],X). 
 X = [a, b, c, d, e, f, g, h] 
+
+/*concatenate.pl*/
+concatenate(Y,Z,X) :- append(Y,Z,X).
