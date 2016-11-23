@@ -1,0 +1,72 @@
+8.1 Explain the concept of state space.
+
+State space representation is the process of modeling a problem's different aspects: Inputs, goals and possible states.
+
+
+8.2 Why should we setup state space? Give an example.
+
+Setting up a state space helps us control and observe the various aspects of a problem more easily , thus solve it faster and with less effort. As an example, think of a game of chess played with a human against an AI player. Both the human and the AI player, create a state space of the game which includes the game's valid moves, winning conditions and possible states (all the possible states are infinite, but each time only the needed ones are used).
+
+
+8.3 Why do we need goal node ? What should we do if there is no goal node as a fact in the knowledge base?
+
+A goal node is needed in order for a procedure to conclude. If there is no goal node (or cannot be found) we should set a limit for the searching algorithm, to avoid infinite (or too time-consuming) loops.
+
+
+8.4 List the advantages and disadvantages of the depth-first search strategy
+
+Advantages of DFS:
+1. It does not have to necessarily search the whole tree. Whenever it finds a solution, it stops searching.
+2. It does not require too much time and memory (not computationally intensive)
+
+Disadvantages of DFS:
+1. There is a risk of the algorithm to run infinitely.
+2. It is not guaranteed that the solution will be found, especially if the algorithm is searching in a non acyclic graph.
+
+
+8.5 How can some of the disadvantages be overcome?
+
+The best solution to DFS' disadvantages is to include a depth limit and a way for the algorithm to remember already visited nodes, to eliminate infinite loops and boost execution time (Even better IDDFS could be used!)
+
+
+
+8.6 Figure 1 is a map modified from London underground. To simplify your task, some links had been removed. Assume the trains operate in both directions between any two linked stations. Check this map and complete the following tasks:
+a) Represent the underground map using state space;
+b) A passenger wants to go to Kings Cross station, and departs from Oxford Circus station. Implement a depth-first search for the shortest trip;
+c) Generalize your program to allow users to start from any station and go any where within the map. 
+
+/* london_underground.pl */
+
+/* question a */
+line(bakerStreet,greatPortlandStreet).
+line(bakerStreet,regentsPark).
+line(regentsPark,oxfordCircus).
+line(greatPortlandStreet,eustonSquare).
+line(eustonSquare,kingsCrossStPancras).
+line(kingsCrossStPancras,russelSquare).
+line(russelSquare,holborn).
+line(holborn,tottenhamCourtRoad).
+line(tottenhamCourtRoad,goodgeStreet).
+line(tottenhamCourtRoad,oxfordCircus).
+line(oxfordCircus,warrenStreet).
+line(warrenStreet,goodgeStreet).
+
+/* Helper function for both questions b and c */
+edge(Station1,Station2):-line(Station1,Station2);line(Station2,Station1).
+
+/* question b */
+
+goal(kingsCrossStPancras).
+
+findroute(S):-dfs_qb([],oxfordCircus,S).
+
+dfs_qb(Path,Curr,[kingsCrossStPancras|Path]):-goal(Curr),!.
+dfs_qb(Path,Curr,S):-edge(Curr,Next),not(member(Curr,Path)),dfs_qb([Curr|Path],Next,S).
+
+
+/* question c */
+
+findroute(Init,Goal,S):-dfs_qc([],Init,Goal,S).
+
+dfs_qc(Path, Curr, Goal, [Goal|Path]):-Curr=Goal,!.
+dfs_qc(Path, Curr, Goal, S):-edge(Curr,Next),not(member(Curr,Path)),dfs_qc([Curr|Path], Next, Goal, S).
