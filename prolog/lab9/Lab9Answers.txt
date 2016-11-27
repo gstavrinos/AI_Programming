@@ -1,0 +1,19 @@
+9.1 Explain why breadth-first search takes more memory.
+
+9.2 Compare depth-first search with breadth-first search strategy.
+
+9.3 What is intelligent search? Explain its difference from breadth-first search
+
+9.4 Figure 1 is a modified version of the map in your last lesson task. Based on your work in the last lesson, modify your program to satisfy the following requirements:
+
+a) Change your search strategy to breadth-first and give the results in the order of their path length, the shortest path should come first.
+
+Start station: Oxford Circus
+
+Destination: King's Cross
+
+b) Modify your program to implement an intelligent search based on the distances. The heuristic is that you always go to the next station which has the shortest distance from your destination station. Here, you have to provide a rough distance between King's Cross and any other station. Your distance need not to be accurate, but the order of the distances in the map (which one is longer in comparison) should be kept.
+
+Start station: Oxford Circus
+
+Destination: King's Cross
