@@ -1,8 +1,17 @@
 9.1 Explain why breadth-first search takes more memory.
 
+The breadth-first search algorithm, needs to keep a list of all the child nodes that has gone through in order to find the shortest one.
+
+
 9.2 Compare depth-first search with breadth-first search strategy.
 
+On the one hand, depth-first algorithm is easier to implement and much less resource intensive, but does not guarantee the shortest path. On the other hand, breadth-first algorithm is more complicated and uses much more memory but it is guaranteed that the final solution will be the shortest path.
+
+
 9.3 What is intelligent search? Explain its difference from breadth-first search
+
+Intelligent search tries to mimic the human rationale, by looking at the closest nodes and picking the one that seems the best. This process tries to minimize the duration of the search.
+
 
 9.4 Figure 1 is a modified version of the map in your last lesson task. Based on your work in the last lesson, modify your program to satisfy the following requirements:
 
