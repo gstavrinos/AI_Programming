@@ -1,0 +1,55 @@
+10.1 Explain why if-then rules are a natural form of expressing knowledge.
+
+If-then rules are more natural because they are closer to basic human rationale, and also have the following features:
+
+1. Modularity: Each rule is independent from the others.
+2. Incrementability: We can add new rules without affecting the ones already in the KB.
+3. Modifiability: We can modify older rules without affecting the KB.
+4. Transparency: The rules are easy to follow and understand how a decision was made.
+
+
+10.2 Demonstrate the difference between forward and backward chaining in rule-based systems using examples.
+
+Forward and backward chaining are two opposite ways of searching for a conclusion for an if-then rule. 
+
+On the one hand, backward chaining starts from the hypothesis (e.g. piano piece of the romantic era) and then checks if all the required conditions are true (e.g. composed in the 18th century by Franz Liszt).
+
+On the other hand, forward chaining starts from the various conditions that are true at the current state of the system (e.g. a piano piece composed by Franz Liszt in the 18th century) and checks what conclusions can be made based on these conditions.
+
+In summary, backwards chaining starts from the goal and goes back to the data, while forward chaining starts from the data and goes moves on to the applicable goals.
+
+
+10.3 Explain the architecture of an expert system and the function of its components
+
+An expert system consists of three components:
+
+1. Knowledge Base: In this component, all the rules that compose the known world of the system are included.
+2. Inference System: This is the component that knows how to handle the Knowledge Base.
+3. User Interface: This last component enables communication between the end-user and the expert system.
+
+
+10.4 a) Figure 1 demonstrates a simple circuit for three lights: Light 1, Light 2 and Light 3. S1 and S2 are switches. The lights may develop faults and be broken. Using if-then rules, represent the knowledge to diagnose which light is broken in Prolog.
+
+
+
+b) In Figure 1, S2 is ON and S1 is OFF. Light 2 is working, but Light 1 and Light 3 are not working.. Represent these facts in Prolog and write out the query input and output (based on your rules in (a)).
+
+
+/* light_circuit.pl */
+
+% Question a
+
+l1_is_broken:- not(l1),s1.
+
+l2_is_broken:- not(l2),s2,l3.
+
+l3_is_broken:- not(l3),s2,l2.
+
+
+% Question b
+
+s2.
+s1:-false.
+l2.
+l3:-false.
+l1:-false.
