@@ -8,7 +8,7 @@ sr([any|X],X).
 %sr([what|X],[files|X]).
 %sr([file|X],[files|X]).
 sr([everything|X],[all,files|X]).
-sr([every|X],[all|X]).
+sr([every,A,file|X],[all,A,files|X]).
 
 
 sr([i,want,you,to|X],X).
@@ -18,19 +18,35 @@ sr([i|X],X).
 sr([want|X],X).
 sr([need|X],X).
 sr([see|X],X).
+sr([can|X],X).
+sr([could|X],X).
 sr([you|X],X).
+sr([yourself|X],X).
+sr([program|X],X).
 sr([a|X],X).
 sr([an|X],X).
 sr([of|X],X).
 sr([in|X],X).
 sr([on|X],X).
+sr([would|X],X).
+sr([like|X],X).
+sr([for|X],X).
 sr([me|X],X).
 sr([my|X],X).
 sr([between|X],X).
+sr([under|X],X).
 sr([show|X],X).
 sr([tell|X],X).
 sr([print|X],X).
 sr([please|X],X).
+sr([new|X],X).
+sr([with|X],X).
+sr([make|X],[create|X]).
+sr([named|X],[name|X]).
+sr([called|X],[name|X]).
+sr([search|X],[find|X]).
+sr([look|X],[find|X]).
+sr([discover|X],[find|X]).
 sr([directory|X],[folder|X]).
 sr([delete|X],[remove|X]).
 sr([erase|X],[remove|X]).
@@ -48,7 +64,19 @@ sr([how,many|X],[count|X]).
 sr([number|X],[count|X]).
 sr([compare|X],[difference|X]).
 sr([change,name|X],[rename|X]).
+sr([default,internet,browser|X],[firefox|X]).
+sr([internet,browser|X],[firefox|X]).
+sr([browser|X],[firefox|X]).
+sr([mozilla|X],[firefox|X]).
+sr([default,file,manager|X],[dolphin|X]).
+sr([default,file,browser|X],[dolphin|X]).
+sr([file,manager|X],[dolphin|X]).
+sr([file,browser|X],[dolphin|X]).
+sr([open|X],[run|X]).
+sr([shortcut|X],[symlink|X]).
+sr([symbolic,link|X],[symlink|X]).
 sr([change,the,name|X],[rename|X]).
+sr([change,name|X],[rename|X]).
 
 simplify(List,Result) :-
   sr(List,NewList),
@@ -72,6 +100,14 @@ tr([reboot],['sudo reboot']).
 
 % Shutdown
 tr([shutdown],['sudo shutdown -h now']).
+
+% Run Firefox
+tr([run,firefox],['firefox &']).
+tr([firefox],['firefox &']).
+
+% Run Dophin File Browser
+tr([run,dolphin],['dolphin &']).
+tr([dolphin],['dolphin &']).
 
 % Count all files in folder
 tr([count,files,folder,X],['ls ',X,' | wc -l']).
@@ -107,6 +143,7 @@ tr([size,file,X,folder,Y],['du -h ',Y,'/',X,' | cut -f1']).
 tr([X,files,folder,Y],['ls -l ',Y,'/*.',X]).
 tr([list,X,files,folder,Y],['ls -l ',Y,'/*.',X]).
 tr([all,X,files,folder,Y],['ls -l ',Y,'/*.',X]).
+tr([all,X,files,Y],['ls -l ',Y,'/*.',X]).
 tr([list,all,X,files,folder,Y],['ls -l ',Y,'/*.',X]).
 tr([list,all,X,files,Y],['ls -l ',Y,'/*.',X]).
 
@@ -131,15 +168,33 @@ tr([copy,all,X,files,from,Y,to,Z], ['cp ',Y,'/*.',X,' ',Z]).
 
 % Move all files from folder to folder
 tr([move,files,from,folder,X,to,folder,Y], ['mv ',X,'/* ',Y]).
-tr([move,files,from,X,to,Y], ['mv ',X,'/* ',Y]).
+tr([move,files,to,Y], ['mv * ',Y]).
 tr([move,all,files,from,folder,X,to,folder,Y], ['mv ',X,'/* ',Y]).
 tr([move,all,files,from,X,to,Y], ['mv ',X,'/* ',Y]).
+tr([move,files,from,X,to,Y], ['mv ',X,'/* ',Y]).
+tr([move,all,files,to,Y], ['mv * ',Y]).
 
 % Move type of files from folder to folder
 tr([move,X,files,from,folder,Y,to,folder,Z], ['mv ',Y,'/*.',X,' ',Z]).
-tr([move,X,files,from,Y,to,Z], ['mv ',Y,'/*.',X,' ',Z]).
 tr([move,all,X,files,from,folder,Y,to,folder,Z], ['mv ',Y,'/*.',X,' ',Z]).
+tr([move,all,X,files,to,folder,Z], ['mv *.',X,' ',Z]).
 tr([move,all,X,files,from,Y,to,Z], ['mv ',Y,'/*.',X,' ',Z]).
+tr([move,X,files,from,Y,to,Z], ['mv ',Y,'/*.',X,' ',Z]).
+tr([move,all,X,files,to,Z], ['mv *.',X,' ',Z]).
+
+% Move specific file or folder from folder to folder
+tr([move,file,X,from,folder,Y,to,folder,Z], ['mv ',Y,'/',X,' ',Z]).
+tr([move,folder,X,from,folder,Y,to,folder,Z], ['mv ',Y,'/',X,' ',Z]).
+tr([move,X,from,folder,Y,to,folder,Z], ['mv ',Y,'/',X,' ',Z]).
+tr([move,file,X,from,Y,to,Z], ['mv ',Y,'/',X,' ',Z]).
+tr([move,folder,X,from,Y,to,Z], ['mv ',Y,'/',X,' ',Z]).
+tr([move,X,from,Y,to,Z], ['mv ',Y,'/',X,' ',Z]).
+tr([move,file,X,to,folder,Z], ['mv ',X,' ',Z]).
+tr([move,folder,X,to,folder,Z], ['mv ',X,' ',Z]).
+tr([move,file,X,to,Z], ['mv ',X,' ',Z]).
+tr([move,folder,X,to,Z], ['mv ',X,' ',Z]).
+tr([move,X,to,folder,Z], ['mv ',X,' ',Z]).
+tr([move,X,to,Z], ['mv ',X,' ',Z]).
 
 % Remove all files from folder to folder
 tr([remove,files,from,folder,X], ['rm -rf ',X,'/*']).
@@ -153,19 +208,94 @@ tr([remove,X,files,from,Y], ['rm ',Y,'/*.',X]).
 tr([remove,all,X,files,from,folder,Y], ['rm ',Y,'/*.',X]).
 tr([remove,all,X,files,from,Y], ['rm ',Y,'/*.',X]).
 
+% Remove specific file or folder
+tr([remove,file,X,from,Y], ['rm ',Y,'/',X]).
+tr([remove,file,X,from,folder,Y], ['rm ',Y,'/',X]).
+tr([remove,folder,X,from,Y], ['rm -r',Y,'/',X]).
+tr([remove,folder,X,from,folder,Y], ['rm -r',Y,'/',X]).
+tr([remove,X,from,folder,Y], ['rm -r ',Y,'/',X]).
+tr([remove,X,from,Y], ['rm -r ',Y,'/',X]).
+tr([remove,X], ['rm -r ',X]).
+
 % Differences between file X and file Y
-tr([differences,X,and,Y], ['diff ',X,' ',Y]).
-tr([difference,X,and,Y], ['diff ',X,' ',Y]).
 tr([difference,files,X,and,Y], ['diff ',X,' ',Y]).
 tr([difference,file,X,and,file,Y], ['diff ',X,' ',Y]).
+tr([differences,X,and,Y], ['diff ',X,' ',Y]).
+tr([difference,X,and,Y], ['diff ',X,' ',Y]).
 
 % Rename file or filder from X to Y
-tr([rename,X,to,Y], ['mv ',X,' ',Y]).
 tr([rename,from,X,to,Y], ['mv ',X,' ',Y]).
 tr([rename,file,X,to,Y], ['mv ',X,' ',Y]).
 tr([rename,folder,X,to,Y], ['mv ',X,' ',Y]).
+tr([rename,X,to,Y], ['mv ',X,' ',Y]).
+
+% Create new folder
+tr([create,folder,X,folder,Y], ['mkdir ',Y,'/',X]).
+tr([create,folder,Y,name,X], ['mkdir ',Y,'/',X]).
+tr([create,folder,name,X,folder,Y], ['mkdir ',Y,'/',X]).
+tr([create,folder,folder,Y,name,X], ['mkdir ',Y,'/',X]).
+tr([create,Y,folder,name,X], ['mkdir ',Y,'/',X]).
+tr([create,folder,name,X], ['mkdir ',X]).
+tr([create,folder,X], ['mkdir ',X]).
+tr([create,folder,X,Y], ['mkdir ',Y,'/',X]).
+
+% Create new file
+tr([create,file,X,folder,Y], ['touch ',Y,'/',X]).
+tr([create,file,Y,name,X], ['touch ',Y,'/',X]).
+tr([create,file,name,X,folder,Y], ['touch ',Y,'/',X]).
+tr([create,file,folder,Y,name,X], ['touch ',Y,'/',X]).
+tr([create,Y,file,name,X], ['touch ',Y,'/',X]).
+tr([create,file,name,X], ['touch ',X]).
+tr([create,file,X], ['touch ',X]).
+tr([create,file,X,Y], ['touch ',Y,'/',X]).
+
+% Create a symlink
+tr([create,symlink,folder,X,name,Y], ['ln -s ',X,' ',Y]).
+tr([create,symlink,folder,X,folder,Y], ['ln -s ',X,' ',Y]).
+tr([create,symlink,folder,X,folder,Y,name,Z], ['ln -s ',X,' ',Y,'/',Z]).
+tr([create,symlink,folder,X,name,Z,folder,Y], ['ln -s ',X,' ',Y,'/',Z]).
+tr([create,symlink,file,X,folder,Y,name,Z], ['ln -s ',X,' ',Y,'/',Z]).
+tr([create,symlink,file,X,name,Z,folder,Y], ['ln -s ',X,' ',Y,'/',Z]).
+tr([create,symlink,file,X,name,Y], ['ln -s ',X,' ',Y]).
+tr([create,symlink,file,X,folder,Y], ['ln -s ',X,' ',Y]).
+tr([create,symlink,X,folder,Y,name,Z], ['ln -s ',X,' ',Y,'/',Z]).
+tr([create,symlink,X,name,Z,folder,Y], ['ln -s ',X,' ',Y,'/',Z]).
+tr([create,symlink,X,name,Y], ['ln -s ',X,' ',Y]).
+tr([create,symlink,X,folder,Y], ['ln -s ',X,' ',Y]).
+tr([create,symlink,file,X,Y], ['ln -s ',X,' ',Y]).
+% I am not using the last two, because the phrases
+% Create a shortcut for X in Y
+% and
+% Create a shortcut in Y for X
+% have the same result!
+%tr([create,symlink,folder,X,Y], ['ln -s ',X,' ',Y]).
+%tr([create,symlink,X,Y], ['ln -s ',X,' ',Y]).
 
 
+% Find files with name
+tr([find,all,files,name,X], ['find / -name ',X]).
+tr([find,all,files,name,X,folder,Y], ['find ',Y,' -name ',X]).
+tr([find,all,files,folder,Y,name,X], ['find ',Y,' -name ',X]).
+tr([find,all,files,Y,name,X], ['find ',Y,' -name ',X]).
+tr([find,files,name,X], ['find / -name ',X]).
+tr([find,files,name,X,folder,Y], ['find ',Y,' -name ',X]).
+tr([find,files,name,X,Y], ['find ',Y,' -name ',X]).
+tr([find,files,folder,Y,name,X], ['find ',Y,' -name ',X]).
+tr([find,files,Y,name,X], ['find ',Y,' -name ',X]).
+tr([find,file,name,X], ['find / -name ',X]).
+tr([find,file,name,X,folder,Y], ['find ',Y,' -name ',X]).
+tr([find,file,folder,Y,name,X], ['find ',Y,' -name ',X]).
+tr([find,file,Y,name,X], ['find ',Y,' -name ',X]).
+tr([find,all,files,name,X,Y], ['find ',Y,' -name ',X]).
+tr([find,file,name,X,Y], ['find ',Y,' -name ',X]).
+
+% Find all files with type
+tr([find,X,files,folder,Y],['find ',Y,' -name *.',X]).
+tr([find,X,files,Y],['find ',Y,' -name *.',X]).
+tr([find,X,files],['find / -name *.',X]).
+tr([find,all,X,files,folder,Y],['find ',Y,' -name *.',X]).
+tr([find,all,X,files,Y],['find ',Y,' -name *.',X]).
+tr([find,all,X,files],['find / -name *.',X]).
 
 %tr([files,on,directory,X],['cmd /k dir ','\\',X]).
 
@@ -173,14 +303,20 @@ translate(Input,Result) :-
    tr(Input,Result),
    !.
 
+translate([],[]):-
+   write('Oh, come on! Say something meaningful!'),
+   nl,!.
+
 translate(_,[]) :-
-   write('I do not understand'),
+   write('Sorry, but I do not quite understand...'),
    nl.
 
 
 process_commands :-
+  write('Hello! I am a small Prolog program created by George Stavrinos! '),
+  nl,
    repeat,
-      write('Command -> '),
+      write('What do you want me to do? - '),
       tokenize_line(user,X),
       tokens_words(X,What),
       simplify(What,SimplifiedWords),
