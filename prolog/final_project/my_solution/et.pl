@@ -125,7 +125,6 @@ tokenize_line_x(_, '.', Stream,Dlist) :-
    % Start over, classifying '.' as a digit
    tokenize_line_x(digit, '.', Stream,Dlist).
 
-
 % Special characters and unidentified characters are easy:
 % they stand by themselves, and the next token begins with
 % the very next character.
@@ -152,6 +151,12 @@ tokenize_letters(letter,Char,Stream,[Char|Rest],NewType,NewChar) :-
    get_char_and_type(Stream,Char2,Type2),
    tokenize_letters(Type2,Char2,Stream,Rest,NewType,NewChar).
 
+tokenize_letters(digit,Char,Stream,[Char|Rest],NewType,NewChar) :-
+   % It's a digit without space, so process it, read another character ahead, and recurse.
+   !,
+   get_char_and_type(Stream,Char2,Type2),
+   tokenize_letters(Type2,Char2,Stream,Rest,NewType,NewChar).
+
 tokenize_letters(_,'''',Stream,Rest,NewType,NewChar) :-
    %
    % Absorb an apostrophe, but only when it precedes t.
@@ -161,6 +166,15 @@ tokenize_letters(_,'''',Stream,Rest,NewType,NewChar) :-
    !,
    get_char(Stream,_),
    tokenize_letters(letter,t,Stream,Rest,NewType,NewChar).
+
+tokenize_letters(_, '.', Stream,['.'|Rest],NewType,NewChar) :-
+   peek_char(Stream,P),
+   char_type_char(P,letter,Char2),
+   !,
+   % It's a period followed by a letter, so include it and continue.
+   % This is used to read string like this: filename.type
+   get_char(Stream,_),
+   tokenize_letters(letter,Char2,Stream,Rest,NewType,NewChar).
 
 tokenize_letters(Type,Char,_,[],Type,Char).
    % It's not a letter, so don't process it; pass it to the calling procedure.
@@ -278,6 +292,8 @@ char_table('W',   letter,    w ).
 char_table('X',   letter,    x ).
 char_table('Y',   letter,    y ).
 char_table('Z',   letter,    z ).
+% Adding / as a letter so that I can read paths!
+char_table('/',   letter,    / ).
 
 % Digits
 char_table('0',   digit,     '0' ).
