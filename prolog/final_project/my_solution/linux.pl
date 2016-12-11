@@ -155,8 +155,8 @@ tr([copy,all,files,from,X,to,Y], ['cp -r ',X,'/* ',Y]).
 
 % Copy specific file or folder to location
 tr([copy,file,X,to,folder,Y], ['cp ',X,' ',Y]).
-tr([copy,folder,X,to,folder,Y], ['cp -r',X,' ',Y]).
-tr([copy,folder,X,to,Y], ['cp -r',X,' ',Y]).
+tr([copy,folder,X,to,folder,Y], ['cp -r ',X,' ',Y]).
+tr([copy,folder,X,to,Y], ['cp -r ',X,' ',Y]).
 tr([copy,X,to,folder,Y], ['cp -r ',X,' ',Y]).
 tr([copy,X,to,Y], ['cp -r ',X,' ',Y]).
 
@@ -215,6 +215,8 @@ tr([remove,folder,X,from,Y], ['rm -r',Y,'/',X]).
 tr([remove,folder,X,from,folder,Y], ['rm -r',Y,'/',X]).
 tr([remove,X,from,folder,Y], ['rm -r ',Y,'/',X]).
 tr([remove,X,from,Y], ['rm -r ',Y,'/',X]).
+tr([remove,file,X], ['rm ',X]).
+tr([remove,folder,X], ['rm -r ',X]).
 tr([remove,X], ['rm -r ',X]).
 
 % Differences between file X and file Y
@@ -331,6 +333,7 @@ pass_to_os([exit]) :- !.
 
 pass_to_os(Command) :-
    concat(Command,String),
+   write(Command),
    shell(String).
 
 
