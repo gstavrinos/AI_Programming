@@ -9,6 +9,7 @@ sr([any|X],X).
 %sr([file|X],[files|X]).
 sr([everything|X],[all,files|X]).
 sr([every,A,file|X],[all,A,files|X]).
+sr([every,file|X],[all,files|X]).
 
 
 sr([i,want,you,to|X],X).
@@ -60,13 +61,15 @@ sr([shutdown|_],[shutdown]).
 sr([power,off|_],[shutdown]).
 sr([power,off,system|_],[shutdown]).
 sr([power,off,computer|_],[shutdown]).
+sr([close,the,computer|_],[shutdown]).
+sr([close,computer|_],[shutdown]).
 sr([how,many|X],[count|X]).
 sr([number|X],[count|X]).
 sr([compare|X],[difference|X]).
-sr([change,name|X],[rename|X]).
 sr([default,internet,browser|X],[firefox|X]).
 sr([internet,browser|X],[firefox|X]).
 sr([browser|X],[firefox|X]).
+sr([mozilla,firefox|X],[firefox|X]).
 sr([mozilla|X],[firefox|X]).
 sr([default,file,manager|X],[dolphin|X]).
 sr([default,file,browser|X],[dolphin|X]).
@@ -317,6 +320,22 @@ translate(_,[]) :-
 process_commands :-
   write('Hello! I am a small Prolog program created by George Stavrinos! '),
   nl,
+  write('I can: '),nl,
+  write('- Shutdown the computer'),nl,
+  write('- Reboot the computer'),nl,
+  write('- Run the Firefox internet browser'),nl,
+  write('- Run the Dolphin file manager'),nl,
+  write('- Show the numbder of files in a directory'),nl,
+  write('- Show the size of a file or folder'),nl,
+  write('- Show files in a directory'),nl,
+  write('- Copy a file or folder in a directory'),nl,
+  write('- Move a file or folder in a directory'),nl,
+  write('- Remove a file or folder'),nl,
+  write('- Rename a files or folder'),nl,
+  write('- See the differences between two files'),nl,
+  write('- Create a file or directory'),nl,
+  write('- Create a shortcut for a file or folder'),nl,
+  write('- Search for a file or folder'),nl,
    repeat,
       write('What do you want me to do? - '),
       tokenize_line(user,X),
