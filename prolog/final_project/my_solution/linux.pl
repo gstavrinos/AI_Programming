@@ -3,10 +3,6 @@ sr([is|X],X).
 sr([are|X],X).
 sr([there|X],X).
 sr([any|X],X).
-%sr([disk,in,drive|X],[drive|X]).
-%sr([what,files|X],[files|X]).
-%sr([what|X],[files|X]).
-%sr([file|X],[files|X]).
 sr([everything|X],[all,files|X]).
 sr([every,file|X],[all,files|X]).
 
@@ -336,10 +332,6 @@ tr([switch,folder,X],['cd ',X]).
 tr([switch,current,folder,X],['cd ',X]).
 tr([go,folder,X],['cd ',X]).
 tr([go,X],['cd ',X]).
-
-
-
-%tr([files,on,directory,X],['cmd /k dir ','\\',X]).
 
 translate(Input,Result) :-
    tr(Input,Result),
