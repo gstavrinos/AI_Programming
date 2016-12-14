@@ -88,6 +88,7 @@ sr([symbolic,link|X],[symlink|X]).
 sr([change,the,name|X],[rename|X]).
 sr([change,name|X],[rename|X]).
 sr([current,working|X],[current|X]).
+sr([switch|X],[change|X]).
 
 simplify(List,Result) :-
   sr(List,NewList),
@@ -329,6 +330,12 @@ tr([find,all,X,files],['find / -name *.',X]).
 
 % Show current working directory
 tr([current,folder],['pwd']).
+
+% Change directory
+tr([switch,folder,X],['cd ',X]).
+tr([switch,current,folder,X],['cd ',X]).
+tr([go,folder,X],['cd ',X]).
+tr([go,X],['cd ',X]).
 
 
 
