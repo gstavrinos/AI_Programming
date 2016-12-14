@@ -382,7 +382,6 @@ pass_to_os([exit]) :- write('Goodbye!'),!.
 
 pass_to_os(Command) :-
    concat(Command,String),
-   write(Command),
    shell(String).
 
 
