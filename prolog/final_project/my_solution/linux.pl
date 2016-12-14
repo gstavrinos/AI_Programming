@@ -378,7 +378,7 @@ process_commands :-
 
 pass_to_os([])     :- !.
 
-pass_to_os([exit]) :- !.
+pass_to_os([exit]) :- write('Goodbye!'),!.
 
 pass_to_os(Command) :-
    concat(Command,String),
