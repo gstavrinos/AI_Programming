@@ -79,6 +79,7 @@ sr([default,file,browser|X],[dolphin|X]).
 sr([file,manager|X],[dolphin|X]).
 sr([file,browser|X],[dolphin|X]).
 sr([open|X],[run|X]).
+sr([start|X],[run|X]).
 sr([shortcut|X],[symlink|X]).
 sr([symbolic,link|X],[symlink|X]).
 sr([change,the,name|X],[rename|X]).
