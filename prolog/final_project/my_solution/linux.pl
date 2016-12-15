@@ -366,6 +366,7 @@ process_commands :-
   write('- Create a shortcut for a file or folder'),nl,
   write('- Search for a file'),nl,
   write('- Show current working directory'),nl,
+  write('- Change directory'),nl,
    repeat,
       write('What do you want me to do? - '),
       tokenize_line(user,X),
