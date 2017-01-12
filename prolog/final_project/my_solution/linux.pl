@@ -329,8 +329,8 @@ tr([find,all,X,files],['find / -name *.',X]).
 tr([current,folder],['pwd']).
 
 % Change directory
-tr([switch,folder,X],['cd ',X]).
-tr([switch,current,folder,X],['cd ',X]).
+tr([change,folder,X],['cd ',X]).
+tr([change,current,folder,X],['cd ',X]).
 tr([go,folder,X],['cd ',X]).
 tr([go,X],['cd ',X]).
 
