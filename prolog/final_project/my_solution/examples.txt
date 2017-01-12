@@ -1,0 +1,103 @@
+#1 Shutdown
+
+Power off the system
+Shutdown the pc
+
+
+#2 Reboot
+
+Restart the computer
+Reboot the pc
+
+
+#3 Firefox
+
+Open the default internet browser
+Could you please run firefox for me?
+
+
+#4 Dolphin
+
+Run the default file manager
+Can you please run dolphin?
+
+
+#5 Number of files in directory
+
+Show me the number of files in test1
+Can you please show me how many files there are in folder test1?
+
+
+#6 Size of file or folder
+
+Please show me the size of folder test2.
+I would like you to show me the size of folder test1!
+
+
+#7 Show the files in a directory
+
+Please show me every html file in folder test1
+Please show me all txt files in test1
+Please show me all files in test1
+
+#8 Copy a file or folder in a directory
+
+Can you please copy gstavrinos.zip to /home/george?
+Copy /home/george/gstavrinos.zip to test1
+Copy all txt files from test2 to test1
+
+
+#9 Move a file or folder in a directory
+
+Please move all mp3 files from test2 to test1
+I would like you to move song.mp3 from test2 to test1
+I would like you to move folder test1 to test2
+
+
+#10 Remove a file or folder
+
+I would like you to remove all mp3 files from test1
+Please remove everything from folder test3
+
+
+#11 Rename a file or folder
+
+Please rename the folder test1 to test11
+Can you rename test1 to test11?
+
+
+#12 Difference between two files
+
+I would like you to show me the differences between the files test2/t1.txt and test2/t2.txt
+Please show me the difference between test2/t1.txt and test2/t2.txt
+
+
+#13 Create a file or folder
+
+Please create the folder flag in test1
+Create a file in folder test1 named test.txt
+
+
+#14 Create a shortcut for a file or folder
+
+Create a shortcut for test1 in the folder test2 named testt
+Create a shortcut for the file test1/index.html in test2
+
+
+#15 Search for a file
+
+
+Please look for song.mp3 in folder /home/george
+Please look for all mp4 files in /home/george
+
+
+#16 Show the current working directory
+
+Can you show me the current working directory?
+I would like you to show me my current folder
+
+
+#17 Change directory
+
+Please switch to directory test1
+Can you please go to folder test2?
